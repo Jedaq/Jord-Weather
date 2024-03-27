@@ -1,0 +1,148 @@
+{% extends 'home.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+html,body
+{
+  height:100%;
+}
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 1px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 80%;
+            margin-left: 50px;
+            border: 1px solid #827979;
+            border-radius: 4px;
+        }
+
+        .icon {
+            margin-left: 10px;
+            color: #b30098;
+        }
+        .icon-container {
+            top: 5px;
+            position: relative;
+            max-height: 40px;
+            max-width: 40px; 
+            left: 10px;
+            transform: translateY(95%);
+            border: 1px solid rgb(197, 169, 195);
+            padding: 3px;
+        }
+
+        .btn-primary {
+            margin-top: 20px;
+            background-color: #b30098;
+            color: #f6f5f5;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            width: 200px;
+            transition: 0.3s ease-in;
+        }
+
+        .btn-primary:hover {
+            background-color: green;
+            transition: 0.3s ease-in;
+        }
+        .form-group label {
+            display: none;
+        }
+        .content-box {
+            border: 1px solid #e7e7e7;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            margin-left:auto;
+            margin-right:auto;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 5px rgba(149, 43, 43, 1);
+            max-width:300px;
+            animation: tank 0.5s ease-in;
+        }
+        @keyframes tank{
+            from{
+                opacity:0;
+                transform:translate3d(50px, 20px, 30px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+        .content-box h3 
+        {
+            display:flex;
+            font-weight:lighter;
+            margin-left:45px;
+        }
+        .content-box p
+        {
+            text-align:center;
+        }
+        .active-stat {
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            background-color: goldenrod;
+            margin-right: 10px;
+            margin-top:3px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">Your Profile</h1>
+    <div class="content-box">
+        <h3>Date Joined <i class="fas fa-calendar-alt" style="margin-left:-30px; margin-top:3px; font-size:25px; position:absolute;"></i></h3>
+        <p style="font-size:18px;"><b><u>{{ user.date_joined }}</u></b></p>   
+    </div>
+    <div class="content-box"> 
+        <h3>Last Login <div class="active-stat" style="margin-left:-30px; margin-top:5px; position:absolute;"></div></h3>
+        <p style="font-size:18px;"><b><u>{{ user.last_login }}</u></b></p>
+    </div>
+    <div class="container" style="max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(214, 143, 143, 0.9);">
+        <h3 style="text-align: center;">Update Details</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="icon-container">
+                    <i class="fas fa-user icon"></i>
+                </div>
+                {{ form.username|as_crispy_field }}
+            </div>
+            <div class="form-group">
+                <div class="icon-container">
+                    <i class="fas fa-envelope icon"></i>
+                </div>
+                {{ form.email|as_crispy_field }}
+            </div>
+            <center><button type="submit" class="btn btn-primary">Update</button></center>
+        </form>
+    </div>
+    {% if messages %}
+    <div class="container" style="font-size:18px; max-width: 400px; margin-top:-30px; margin-bottom:50px; padding: 10px; border-radius: 5px; background-color: lightgreen; text-align: center;">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+</body>
+</html>
+{% endblock %}

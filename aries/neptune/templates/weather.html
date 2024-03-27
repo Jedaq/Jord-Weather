@@ -1,0 +1,206 @@
+{% extends 'home.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+.dashboard {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  flex-direction:row;
+}
+.card {
+  background-color: #fbf8f8;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+.city-input {
+  padding: 10px;
+  margin: 10px 0;
+  margin-left:30px;
+  border: 1px solid #ccccccdc;
+  border-radius: 4px;
+  max-width:80%;
+}
+.current-weather {
+  margin-top: 5px;
+  margin-left:30px;
+  text-align: center;
+  display:none;
+  font-size:19px;
+  line-height: 1.8;
+  max-width:300px;
+}
+button {
+  padding: 10px 20px;
+  background-color: rgb(170, 22, 170);
+  color: white;
+  border: none;
+  max-width:200px;
+  margin-left:75px;
+  border-radius: 4px;
+  transition: 0.2s ease-in;
+}
+button:hover {
+  background-color:rgb(6, 134, 65);
+  transition:0.2s ease-in;
+}
+.weather-widget{
+  margin-top:130px;
+  text-align:center;
+  margin-bottom:200px;
+  margin-right:auto;
+  margin-left:auto;
+  max-width:1300px;
+}
+
+.forecast-container {
+  display: flex;
+  flex-wrap: nowrap;  
+  display:none;
+  gap: 20px;
+  padding-top:50px;
+  padding-bottom:50px;
+  font-size:30px;
+  overflow:auto;
+}
+.forecast-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.forecast-container::-webkit-scrollbar-track {
+  background: white;
+}
+
+.forecast-container::-webkit-scrollbar-thumb {
+  background-color: rgb(159, 159, 25);
+}
+
+.forecast-container::-webkit-scrollbar-thumb:hover {
+  background-color: red;
+}
+.forecast-container::-webkit-scrollbar-button:start:decrement {
+  width:40px;
+  background-color:black;
+}
+.forecast-container::-webkit-scrollbar-button:end:increment {
+  width:40px;
+  background-color:black;
+}
+.forecast-card {
+  background-image:linear-gradient(to top,#C33764 , #1D2671);
+  color:white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 260px;
+  min-height:410px;
+  padding-top:60px;
+}
+.geolocation-container {
+  border: 1px solid #d8d6d6;
+  border-radius: 9px;
+  padding: 20px;
+  width:400px;
+  padding: 15px;
+  margin-top:-120px;
+  margin-bottom:40px;
+  text-align:center;
+  background-image: linear-gradient(to top,#009245,#FCEE21);
+  margin-left:auto;
+  margin-right:auto;
+}
+.geolocation-container h3 {
+  font-size: 35px;
+  margin-bottom: 10px;
+}
+.geolocation-info {
+  font-size: 25px;
+}
+#error-message{
+  max-width: 400px; 
+  margin: 20px auto; 
+  padding: 10px; 
+  border-radius: 5px; 
+  background-color: rgb(213, 12, 12); 
+  color:white; 
+  text-align: center;
+  display:none;
+}
+#search{
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+      <div class="dashboard">
+          <div class="card">
+              <h2>Forecasting</h2>
+              <a id="search" title="Search" onclick="getWeather()"><i style="font-size:25px; position:absolute; margin-top:20px; margin-left:100px;" class="fa-solid fa-magnifying-glass fa-beat"></i></a><input type="text" id="cityNameInput" placeholder="Search by City" class="city-input">
+              <button onclick="getWeather()">Get Weather</button>
+              <div id="error-message"></div>
+          </div><br>
+          <div class="card current-weather">
+              <div id="weather-info" class="weather-info">
+                  <div>
+                      <p style="font-size: 28px;" id="weather-heading"><span id="city-name"></span></p>
+                      <div>
+                        <i style="font-size:35px;"id="weather-icon"></i>&nbsp
+                        <span style="font-size:30px;" id="weather-description"></span>
+                      </div><br>
+                      <div>
+                          <i style="color: red;" class="fas fa-thermometer-half"></i>
+                          <span id="temperature">Temperature: </span>
+                      </div>
+                      <div>
+                          <i style="color: navy;" class="fas fa-wind"></i>
+                          <span id="wind-speed">Wind Speed: </span>
+                      </div>
+                      <div>
+                          <i style="color: rgb(114, 183, 206);" class="fas fa-tint"></i>
+                          <span id="humidity">Humidity: </span>
+                      </div>
+                      <div>
+                          <i style="color: #353535;" class="fas fa-tachometer-alt"></i>
+                          <span id="pressure">Pressure: </span>
+                      </div>
+                      <div>
+                          <i style="color: #f1c40f;" class="fas fa-sun"></i>
+                          <span id="sunrise">Sunrise: </span>
+                      </div>
+                      <div>
+                          <i style="color: #3498db;" class="fas fa-moon"></i>
+                          <span id="sunset">Sunset: </span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="weather-widget">
+    <h2 id="forecast-heading" style="display: none;"><i class="fa-solid fa-calendar-days" style="margin-right:5px;"></i>4-Day Hourly Weather Report</h2>
+    <div class="forecast-container" id="forecastContainer">
+    </div>
+  </div>
+  <div class="geolocation-container" id="geolocationContainer" style="display: none;">
+    <h3><i class="fa-solid fa-globe" style="margin-right:5px;"></i>Geolocation Data</h3><br> 
+    <div class="geolocation-info" id="geolocationInfo">
+      <p>City: <span id="cityInfo"></span></p>
+      <p>State/Province: <span id="stateInfo"></span></p>
+      <p>Latitude: <span id="latitudeInfo"></span></p>
+      <p>Longitude: <span id="longitudeInfo"></span></p>
+    </div>
+  </div>
+  <script src="{% static 'js/script.js' %}"></script> 
+</body>
+</html>
+{% endblock %}

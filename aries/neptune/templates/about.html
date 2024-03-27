@@ -1,0 +1,44 @@
+{% extends 'home.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            line-height: 1.6;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: left;
+            font-size:18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="font-size:18px;
+    text-align: center;
+    width: 40%;
+    padding: 30px;
+    margin-top:60px;
+    border: 2px solid #bd2d2d;
+    border-radius: 8px;
+    background-color: white;">
+        <h1 style="margin-bottom: 20px;">About Jord Weather</h1>
+        <div>
+            <p>Jord weather is an NPO(Non-Profit Organization).</p>
+            <p>At Jord Weather, we are passionate about providing accurate and reliable weather forecasts to help you plan your day.</p>
+            <p>Our team work tirelessly to collect and analyze weather data from various sources, ensuring that you get up-to-date and precise weather information.</p>
+            <p>Our goal is to empower you with the knowledge you need to make informed decisions based on weather conditions.</p>
+            <p>Thank you for choosing JordWeather!</p>
+        </div>
+    </div>
+</body>
+</html>
+
+
+{% endblock %}

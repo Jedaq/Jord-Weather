@@ -1,0 +1,75 @@
+{% extends 'home.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .content p {
+            margin-bottom: 70px;
+            padding: 30px;
+            border-radius:8px;
+        }
+        .content p:nth-child(even) {
+            text-align:right;
+        }
+        .content p:nth-child(odd) {
+            text-align:left;
+        }
+        .reg
+        {
+            font-size:22px;
+            text-align:center;
+        }
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background-image: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: white; 
+}
+
+button:hover {
+    color:black;
+    background-image: linear-gradient(to right, #00c9ff, #92fe9d);
+}
+    </style>
+</head>
+<body>
+    <h1 style="font-family:Helvetica; text-align:center;">
+        <span style="color: #01261b;">Jord</span>
+        <span style="color: rgb(212, 193, 20);">Weather</span>
+    </h1> 
+    <div class="container" style="max-width: 1100px; padding: 20px;">
+        <div class="content" style="margin-top:120px;">
+            <img src="{% static 'images/Weather1.png' %}" height="300px" width="300px" style="position:relative; margin-left:160px; margin-top:80px;">
+            <p style="width:420px; float:right; font-size: 26px; background:linear-gradient(to top,white,white,violet,violet)">
+                Welcome to Jord weather, our exclusive weather companion, your go-to destination for accurate and detailed weather forecasts worldwide. Our platform offers a user-friendly interface to keep you informed about the latest weather conditions at your fingertips.
+            </p>
+            <img src="{% static 'images/Weather2.gif' %}" height="250px" width="300px" style="position:relative; margin-left:720px; top:150px;">
+            <p style="width:420px; float:left; margin-top:-130px; font-size: 26px; background:linear-gradient(to left,white,white,violet,violet)">
+                Get ready to explore the weather like never before! Whether you're planning a weekend getaway, organizing outdoor events, or simply staying updated on the local forecast, our web app has you covered. With a robust and intuitive design, accessing real-time weather data for any city is just a click away.
+            </p>
+            <img src="{% static 'images/Weather3.png' %}" height="200px" width="200px" style="position:relative; right:250px; margin-top:600px;">
+            <p style="width:420px; float:right; margin-top:450px; font-size: 26px; background:linear-gradient(to right,white,white,violet,violet)">
+                Uncover comprehensive weather insights by entering the city of your choice into our search bar. Discover temperature trends, precipitation levels, wind speeds, and more. JordWeather guarantees reliable, minute-by-minute updates, ensuring you're equipped with accurate information to plan your day effectively.
+            </p>
+            <img src="{% static 'images/Weather4.png' %}" height="200px" width="200px" style="position:relative; left:380px; margin-top:400px;"> 
+            <p style="width:420px; float:left; margin-top:300px; font-size: 26px; background:linear-gradient(to left,white,white,violet,violet)">
+                Stay ahead of the elements and make informed decisions with our precise weather predictions. Designed to simplify your weather-tracking experience, our site equips you with the tools to prepare for any weather condition. From sun-soaked days to rain showers, our aim is to help you seize every moment confidently.
+            </p>
+            <img src="{% static 'images/Weather5.png' %}" height="230px" width="230px" style="position:relative; right:250px; margin-top:420px;"> 
+            <p style="width:420px; float:right; margin-top:-300px; font-size: 26px; background:linear-gradient(to bottom,white,white,violet,violet)">
+                Experience the power of weather information personalized to your needs. Let JordWeather be your weather companion, providing you with essential data to make the most of every day, no matter where you are.
+            </p>  
+        </div>
+    </div>
+        <div class="reg">
+            <a href="{% url 'register' %}"><button>Register Now!</button></a>
+            <p>Register for free and get access to exclusive contents.</p>
+        </div>
+</body>
+</html>
+{% endblock %}
